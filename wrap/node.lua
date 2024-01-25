@@ -31,6 +31,7 @@ function Node:delete()
 end
 
 function Node:animate(property, to, easing, duration, delay, complete_function, playback)
+	delay = delay or 0
 	if type(property) == "table" then
 		for i, prop in pairs(property) do
 			gui.animate(self.node, prop, to[i], easing, duration, delay, i == 1 and complete_function or nil, playback)
