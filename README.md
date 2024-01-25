@@ -1,6 +1,6 @@
 # Defold Wrap Library
 
-This tiny library is designed to help you change the way you code on Defold.
+This tiny library is intended to help you change the way you code on Defold.
 
 Instead of
 ```lua
@@ -24,7 +24,7 @@ w.title:set_text("Admin")
 w.button:set_size(vmath.vector(100, 50, 0))
 ```
 
-Currenly, it has all methods working for GUI nodes, besides, it supports some convenient methods you may need it sometimes, like
+Currently, it has all methods working for GUI nodes, besides, it supports some convenient methods you may need it sometimes, like
 ```
 add_position(...),
 get_position_x()
