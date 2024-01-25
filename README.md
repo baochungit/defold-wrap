@@ -21,7 +21,7 @@ You can also get a list of wrapped nodes
 local w = wrap.node({ mynode = "my_node", title = "text_title", button = gui.get_node("button") })
 w.mynode:set_alpha(0.5)
 w.title:set_text("Admin")
-w.button:set_size(vmath.vector(100, 50, 0))
+w.button:set_size(vmath.vector3(100, 50, 0))
 ```
 
 Currently, it has all methods working for GUI nodes, besides, it supports some convenient methods you may need it sometimes, like
