@@ -125,6 +125,7 @@ function Node:get_flipbook()
 end
 
 function Node:play_flipbook(animation, complete_function, play_properties)
+	play_properties = play_properties or {}
 	gui.play_flipbook(self.node, animation, complete_function, play_properties)
 	return self
 end
