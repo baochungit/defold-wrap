@@ -54,24 +54,31 @@ function Node:cancel_animation(property)
 end
 
 function Node:new_box_node(position, size)
+	position = position or vmath.vector3()
+	size = size or vmath.vector3()
 	local node = gui.new_box_node(position, size)
 	gui.set_parent(node, self.node)
 	return node
 end
 
-function Node:new_text_node(position, size)
-	local node = gui.new_text_node(position, size)
+function Node:new_text_node(position, text)
+	position = position or vmath.vector3()
+	text = text or ""
+	local node = gui.new_text_node(position, text)
 	gui.set_parent(node, self.node)
 	return node
 end
 
 function Node:new_pie_node(position, size)
+	position = position or vmath.vector3()
+	size = size or vmath.vector3()
 	local node = gui.new_pie_node(position, size)
 	gui.set_parent(node, self.node)
 	return node
 end
 
 function Node:new_particlefx_node(position, particlefx)
+	position = position or vmath.vector3()
 	local node = gui.new_particlefx_node(position, particlefx)
 	gui.set_parent(node, self.node)
 	return node

@@ -1,7 +1,15 @@
 local wrap = require("wrap.wrap")
 
+local w = nil
+local nodes = { "text", "button", text_1 = "text1" }
+
 function init(self)
-	local w = wrap.node({ "text", text1 = "text1" })
+	w = wrap.node(nodes)
+
 	w.text:set_text("Hello")
-	w.text1:set_text("Halo")
+	w.text_1:set_text("Halo")
+
+	local new_text = w.button:new_text_node()
+	w.button_text = wrap.node(new_text)
+	w.button_text:set_text("Bonjour")
 end
