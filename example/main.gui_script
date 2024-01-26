@@ -1,0 +1,7 @@
+local wrap = require("wrap.wrap")
+
+function init(self)
+	local w = wrap.node({ "text", text1 = "text1" })
+	w.text:set_text("Hello")
+	w.text1:set_text("Halo")
+end
