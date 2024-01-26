@@ -18,8 +18,8 @@ node:set_alpha(0.5):animate("color.w", 1, gui.EASING_LINEAR, 2):set_enabled(true
 ```
 You can also get a list of wrapped nodes
 ```lua
-local w = wrap.node({ mynode = "my_node", title = "text_title", button = gui.get_node("button") })
-w.mynode:set_alpha(0.5)
+local w = wrap.node({ "my_node", title = "text_title", button = gui.get_node("button") })
+w.my_node:set_alpha(0.5)
 w.title:set_text("Admin")
 w.button:set_size(vmath.vector3(100, 50, 0))
 ```
