@@ -10,7 +10,7 @@ function NodeList.new(nodes)
 		if type(key) == "number" and type(node) == "string" then
 			key = node
 		end 
-		NodeList[key] = Node.new(node)
+		self[key] = Node.new(node)
 	end
 	return self
 end
