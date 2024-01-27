@@ -339,7 +339,14 @@ function Node:get_parent()
 end
 
 function Node:set_parent(parent, keep_scene_transform)
+	keep_scene_transform = keep_scene_transform or false
 	gui.set_parent(self.node, parent, keep_scene_transform)
+	return self
+end
+
+function Node:add_child(node, keep_scene_transform)
+	keep_scene_transform = keep_scene_transform or false
+	gui.set_parent(node, self.node, keep_scene_transform)
 	return self
 end
 
