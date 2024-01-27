@@ -602,6 +602,65 @@ function Node:set_size(size)
 	return self
 end
 
+function Node:add_size(value)
+	local size = self:get_size()
+	size.x = size.x + value.x
+	size.y = size.y + value.y
+	size.z = size.z + value.z
+	return self
+end
+
+function Node:get_size_x()
+	local size = self:get_size()
+	return size.x
+end
+
+function Node:get_size_y()
+	local size = self:get_size()
+	return size.y
+end
+
+function Node:get_size_z()
+	local size = self:get_size()
+	return size.z
+end
+
+function Node:set_size_x(x)
+	local size = self:get_size()
+	size.x = x
+	return self:set_size(size)
+end
+
+function Node:set_size_y(y)
+	local size = self:get_size()
+	size.y = y
+	return self:set_size(size)
+end
+
+function Node:set_size_z(z)
+	local size = self:get_size()
+	size.z = z
+	return self:set_size(size)
+end
+
+function Node:add_size_x(x)
+	local size = self:get_size()
+	size.x = size.x + x
+	return self:set_size(size)
+end
+
+function Node:add_size_y(y)
+	local size = self:get_size()
+	size.y = size.y + y
+	return self:set_size(size)
+end
+
+function Node:add_size_z(z)
+	local size = self:get_size()
+	size.z = size.z + z
+	return self:set_size(size)
+end
+
 function Node:get_screen_position()
 	return gui.get_screen_position(self.node)
 end
