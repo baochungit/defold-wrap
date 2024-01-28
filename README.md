@@ -24,7 +24,7 @@ w.title:set_text("Admin")
 w.button:set_size(vmath.vector3(100, 50, 0))
 ```
 
-Currently, it has all methods working for GUI nodes, besides, it supports some convenient methods you may need it sometimes, like
+Currently, it has all methods working for GUI nodes & GO, besides, it supports some convenient methods you may need it sometimes, like
 ```
 add_position(...),
 get_position_x()
