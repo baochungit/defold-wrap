@@ -3,10 +3,12 @@ local Go = {}
 Go.__index = Go
 
 
-function Go.new(url)
+function Go.new(id)
 	local self = setmetatable({}, Go)
-	self.url = url
-	self.id = go.get_id(url)
+	if type(id) == "string" then
+		id = go.get_id(id)
+	end
+	self.id = id
 	return self
 end
 
