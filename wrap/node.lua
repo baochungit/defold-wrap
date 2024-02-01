@@ -661,6 +661,15 @@ function Node:add_size_z(z)
 	return self:set_size(size)
 end
 
+function  Node:get_text_metrics(apply_scale)
+	local metrics = resource.get_text_metrics(gui.get_font_resource(self:get_font()), self:get_text())
+	if apply_scale then
+		metrics.width = metrics.width * self:get_scale_x()
+		metrics.height = metrics.height * self:get_scale_y()
+	end
+	return metrics
+end
+
 function Node:get_screen_position()
 	return gui.get_screen_position(self.node)
 end
