@@ -3,10 +3,10 @@ local Node = require("wrap.node")
 local NodeList = {}
 NodeList.__index = NodeList
 
-function NodeList.new(nodes)
+function NodeList.new(data)
 	local self = setmetatable({}, NodeList)
-	self._nodes = nodes
-	for key, node in pairs(self._nodes) do
+	self._data = data
+	for key, node in pairs(self._data) do
 		if type(key) == "number" and type(node) == "string" then
 			key = node
 		end 
