@@ -503,15 +503,24 @@ function Node:get_scale()
 end
 
 function Node:set_scale(scale)
+	if type(scale) == "number" then
+		scale = vmath.vector3(scale)
+	end
 	gui.set_scale(self.node, scale)
 	return self
 end
 
 function Node:add_scale(value)
 	local scale = self:get_scale()
-	scale.x = scale.x + value.x
-	scale.y = scale.y + value.y
-	scale.z = scale.z + value.z
+	if type(value) == "number" then
+		scale.x = scale.x + value
+		scale.y = scale.y + value
+		scale.z = scale.z + value
+	else
+		scale.x = scale.x + value.x
+		scale.y = scale.y + value.y
+		scale.z = scale.z + value.z
+	end
 	return self
 end
 
