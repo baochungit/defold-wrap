@@ -367,6 +367,7 @@ function Node:get_position()
 end
 
 function Node:set_position(position)
+	position = position or vmath.vector3()
 	gui.set_position(self.node, position)
 	return self
 end
@@ -580,6 +581,15 @@ function Node:get_color()
 end
 
 function Node:set_color(color)
+	if type(color) == "string" then
+		-- #rrggbbaa
+		local r = tonumber('0x' .. string.sub(color, 2, 3), 16) / 255
+		local g = tonumber('0x' .. string.sub(color, 4, 5), 16) / 255
+		local b = tonumber('0x' .. string.sub(color, 6, 7), 16) / 255
+		local a = 1
+		if string.len(color) == 9 then a = tonumber('0x' .. string.sub(color, 8, 9), 16) / 255 end
+		color = vmath.vector4(r, g, b, a)
+	end
 	gui.set_color(self.node, color)
 	return self
 end
