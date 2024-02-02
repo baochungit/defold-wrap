@@ -6,7 +6,11 @@ function init(self)
 	w.text:set_text("Hello")
 	w.text_1:set_text("Halo")
 
-	local new_text = w.button:new_text_node()
-	w.button_text = wrap.node(new_text)
-	w.button_text:set_text("Bonjour")
+	local button_text =  wrap.node(w.button:new_text_node()):set_id("button_text")
+	button_text:set_text("Bonjour")
+
+	local t = wrap.node({ "button", "button_text" }, w.button:clone_tree())
+	t.button_text:set_color("#ffff00")
+	t.button:set_alpha(0.5):set_position_x(t.button:get_position_x() - 2)
+		:animate("position.x", t.button:get_position_x() + 4, gui.EASING_LINEAR, 1, 0 , nil, gui.PLAYBACK_LOOP_PINGPONG)
 end
