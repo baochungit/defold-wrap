@@ -61,12 +61,20 @@ function Node:new_box_node(position, size)
 	return node
 end
 
+function Node:new_box(position, size)
+	return Node.new(self:new_box_node(position, size))
+end
+
 function Node:new_text_node(position, text)
 	position = position or vmath.vector3()
 	text = text or ""
 	local node = gui.new_text_node(position, text)
 	gui.set_parent(node, self.node)
 	return node
+end
+
+function Node:new_text(position, text)
+	return Node.new(self:new_text_node(position, text))
 end
 
 function Node:new_pie_node(position, size)
@@ -77,11 +85,19 @@ function Node:new_pie_node(position, size)
 	return node
 end
 
+function Node:new_pie(position, size)
+	return Node.new(self:new_pie_node(position, size))
+end
+
 function Node:new_particlefx_node(position, particlefx)
 	position = position or vmath.vector3()
 	local node = gui.new_particlefx_node(position, particlefx)
 	gui.set_parent(node, self.node)
 	return node
+end
+
+function Node:new_particlefx(position, particlefx)
+	return Node.new(self:new_particlefx_node(position, particlefx))
 end
 
 function Node:get_text()
