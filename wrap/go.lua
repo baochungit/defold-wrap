@@ -20,6 +20,11 @@ function Go:set(property, value, options)
 	return self
 end
 
+function Go:post(message_id, message)
+	msg.post(self.url, message_id, message)
+	return self
+end
+
 function Go:get_id()
 	return go.get_id(self.url)
 end
