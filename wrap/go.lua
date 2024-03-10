@@ -21,6 +21,7 @@ function Go:set(property, value, options)
 end
 
 function Go:post(message_id, message)
+	message = message or {}
 	msg.post(self.url, message_id, message)
 	return self
 end
