@@ -3,14 +3,14 @@ local Go = require("wrap.go")
 local GoList = {}
 GoList.__index = GoList
 
-function GoList.new(ids)
+function GoList.new(data)
 	local self = setmetatable({}, GoList)
-	self._ids = ids
-	for key, id in pairs(self._ids) do
-		if type(key) == "number" and type(id) == "string" then
-			key = id
+	self._data = data
+	for key, url in pairs(self._data) do
+		if type(key) == "number" and type(url) == "string" then
+			key = url
 		end 
-		self[key] = Go.new(id)
+		self[key] = Go.new(url)
 	end
 	return self
 end

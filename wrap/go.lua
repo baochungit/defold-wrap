@@ -3,31 +3,28 @@ local Go = {}
 Go.__index = Go
 
 
-function Go.new(id)
+function Go.new(url)
 	local self = setmetatable({}, Go)
-	if type(id) == "string" then
-		id = go.get_id(id)
-	end
-	self.id = id
+	self.url = url
 	return self
 end
 
 function Go:get(property, options)
-	return go.get(self.id, property, options)
+	return go.get(self.url, property, options)
 end
 
 function Go:set(property, value, options)
-	go.set(self.id, property, value, options)
+	go.set(self.url, property, value, options)
 	return self
 end
 
 function Go:get_id()
-	return self.id
+	return go.get_id(self.url)
 end
 
 function Go:delete(recursive)
 	recursive = recursive or true
-	go.delete(self.id, recursive)
+	go.delete(self.url, recursive)
 	return self
 end
 
@@ -35,11 +32,11 @@ function Go:animate(property, playback, to, easing, duration, delay, complete_fu
 	delay = delay or 0
 	if type(property) == "table" then
 		for i, prop in pairs(property) do
-			go.animate(self.id, prop, playback, to[i], easing, duration, delay, i == 1 and complete_function or nil)
+			go.animate(self.url, prop, playback, to[i], easing, duration, delay, i == 1 and complete_function or nil)
 
 		end
 	else
-		go.animate(self.id, property, playback, to, easing, duration, delay, complete_function)
+		go.animate(self.url, property, playback, to, easing, duration, delay, complete_function)
 	end
 	return self
 end
@@ -47,25 +44,25 @@ end
 function Go:cancel_animations(property)
 	if type(property) == "table" then
 		for _, prop in pairs(property) do
-			go.cancel_animations(self.id, prop)
+			go.cancel_animations(self.url, prop)
 		end
 	else
-		go.cancel_animations(self.id, property)
+		go.cancel_animations(self.url, property)
 	end
 	return self
 end
 
 function Go:set_position(position)
-	go.set_position(position, self.id)
+	go.set_position(position, self.url)
 	return self
 end
 
 function Go:get_position()
-	return go.get_position(self.id)
+	return go.get_position(self.url)
 end
 
 function Go:set_position(position)
-	go.set_position(position, self.id)
+	go.set_position(position, self.url)
 	return self
 end
 
@@ -129,11 +126,11 @@ function Go:add_position_z(z)
 end
 
 function Go:get_rotation()
-	return go.get_rotation(self.id)
+	return go.get_rotation(self.url)
 end
 
 function Go:set_rotation(rotation)
-	go.set_rotation(rotation, self.id)
+	go.set_rotation(rotation, self.url)
 	return self
 end
 
@@ -197,11 +194,11 @@ function Go:add_rotation_z(z)
 end
 
 function Go:get_scale()
-	return go.get_scale(self.id)
+	return go.get_scale(self.url)
 end
 
 function Go:set_scale(scale)
-	go.set_scale(scale, self.id)
+	go.set_scale(scale, self.url)
 	return self
 end
 
@@ -265,36 +262,36 @@ function Go:add_scale_z(z)
 end
 
 function Go:get_parent()
-	return go.get_parent(self.id)
+	return go.get_parent(self.url)
 end
 
 function Go:set_parent(parent, keep_world_transform)
-	go.set_parent(self.id, parent, keep_world_transform)
+	go.set_parent(self.url, parent, keep_world_transform)
 	return self
 end
 
 function Go:get_scale_uniform()
-	return go.get_scale_uniform(self.id)
+	return go.get_scale_uniform(self.url)
 end
 
 function Go:get_world_position()
-	return go.get_world_position(self.id)
+	return go.get_world_position(self.url)
 end
 
 function Go:get_world_rotation()
-	return go.get_world_rotation(self.id)
+	return go.get_world_rotation(self.url)
 end
 
 function Go:get_world_scale()
-	return go.get_world_scale(self.id)
+	return go.get_world_scale(self.url)
 end
 
 function Go:get_world_scale_uniform()
-	return go.get_world_scale_uniform(self.id)
+	return go.get_world_scale_uniform(self.url)
 end
 
 function Go:get_world_transform()
-	return go.get_world_transform(self.id)
+	return go.get_world_transform(self.url)
 end
 
 
