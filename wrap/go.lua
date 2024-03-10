@@ -10,10 +10,12 @@ function Go.new(url)
 end
 
 function Go:get(property, options)
+	options = options or {}
 	return go.get(self.url, property, options)
 end
 
 function Go:set(property, value, options)
+	options = options or {}
 	go.set(self.url, property, value, options)
 	return self
 end
