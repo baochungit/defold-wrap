@@ -341,11 +341,13 @@ function Node:set_size_mode(size_mode)
 end
 
 function Node:move_above(reference)
+	if type(reference) == "table" then reference = reference.node end
 	gui.move_above(self.node, reference)
 	return self
 end
 
 function Node:move_below(reference)
+	if type(reference) == "table" then reference = reference.node end
 	gui.move_below(self.node, reference)
 	return self
 end
@@ -356,12 +358,14 @@ end
 
 function Node:set_parent(parent, keep_scene_transform)
 	keep_scene_transform = keep_scene_transform or false
+	if type(parent) == "table" then parent = parent.node end
 	gui.set_parent(self.node, parent, keep_scene_transform)
 	return self
 end
 
 function Node:add_child(node, keep_scene_transform)
 	keep_scene_transform = keep_scene_transform or false
+	if type(node) == "table" then node = node.node end
 	gui.set_parent(node, self.node, keep_scene_transform)
 	return self
 end
