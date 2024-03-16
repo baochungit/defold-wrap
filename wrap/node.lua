@@ -709,6 +709,21 @@ function  Node:get_text_metrics(apply_scale)
 	return metrics
 end
 
+function Node:get_total_scale()
+	local get_scale_recursive = function(node)
+		local scale = gui.get_scale(node)
+		local parent = gui.get_parent(node)
+		if parent then
+			local parent_scale = get_scale_recursive(parent)
+			scale.x = scale.x * parent_scale.x
+			scale.y = scale.y * parent_scale.y
+			scale.z = scale.z * parent_scale.z
+		end
+		return scale
+	end
+	return get_scale_recursive(self.node)
+end
+
 function Node:get_screen_position()
 	return gui.get_screen_position(self.node)
 end
@@ -718,8 +733,15 @@ function Node:set_screen_position(screen_position)
 	return self
 end
 
-function Node:screen_to_local(screen_position)
-	return gui.screen_to_local(self.node, screen_position)
+function Node:screen_to_local(screen_position, with_scale)
+	local pos = gui.screen_to_local(self.node, screen_position)
+	if with_scale then
+		local scale = self:get_total_scale()
+		pos.x = pos.x * parent_scale.x
+		pos.y = pos.y * parent_scale.y
+		pos.z = pos.z * parent_scale.z
+	end
+	return pos
 end
 
 function Node:get_flipbook_cursor()
