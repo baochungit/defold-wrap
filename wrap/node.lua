@@ -738,9 +738,9 @@ function Node:screen_to_local(screen_position, ignore_scale)
 	local pos = gui.screen_to_local(self.node, screen_position)
 	if ignore_scale then
 		local scale = self:get_total_scale()
-		pos.x = pos.x / parent_scale.x
-		pos.y = pos.y / parent_scale.y
-		pos.z = pos.z / parent_scale.z
+		pos.x = pos.x / scale.x
+		pos.y = pos.y / scale.y
+		pos.z = pos.z / scale.z
 	end
 	return pos
 end
