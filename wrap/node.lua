@@ -710,17 +710,6 @@ function  Node:get_text_metrics(apply_scale)
 end
 
 function Node:get_total_scale()
-	local get_scale_recursive = function(node)
-		local scale = gui.get_scale(node)
-		local parent = gui.get_parent(node)
-		if parent then
-			local parent_scale = get_scale_recursive(parent)
-			scale.x = scale.x * parent_scale.x
-			scale.y = scale.y * parent_scale.y
-			scale.z = scale.z * parent_scale.z
-		end
-		return scale
-	end
 	return get_scale_recursive(self.node)
 end
 
@@ -797,6 +786,18 @@ end
 function Node:set_alpha(alpha)
 	gui.set_alpha(self.node, alpha)
 	return self
+end
+
+local function get_scale_recursive(node)
+	local scale = gui.get_scale(node)
+	local parent = gui.get_parent(node)
+	if parent then
+		local parent_scale = get_scale_recursive(parent)
+		scale.x = scale.x * parent_scale.x
+		scale.y = scale.y * parent_scale.y
+		scale.z = scale.z * parent_scale.z
+	end
+	return scale
 end
 
 
