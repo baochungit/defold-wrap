@@ -1,8 +1,12 @@
 local wrap = require("wrap.wrap")
+local SceneLoading = require("example.scenes.loading")
+local SceneLobby = require("example.scenes.lobby")
+local Box = require("example.objects.box")
+local Text = require("example.objects.text")
 
 function init(self)
+	-- Basic usage for GUI nodes
 	local w = wrap.node({ "text", "button", text_1 = "text1" })
-
 	w.text:set_text("Hello")
 	w.text_1:set_text("Halo")
 
@@ -12,5 +16,55 @@ function init(self)
 	local t = wrap.node({ "button", "button_text" }, w.button:clone_tree())
 	t.button_text:set_color("#ffff00")
 	t.button:set_alpha(0.5):set_position_x(t.button:get_position_x() - 2)
-		:animate("position.x", t.button:get_position_x() + 4, gui.EASING_LINEAR, 1, 0 , nil, gui.PLAYBACK_LOOP_PINGPONG)
+	t.button:animate("position.x", t.button:get_position_x() + 4, gui.EASING_LINEAR, 1, 0 , nil, gui.PLAYBACK_LOOP_PINGPONG)
+
+	-- Applet 1: Demo of single scene
+	self.applet1 = wrap.gui_applet("applet1", {
+		init = function(scene)
+			scene:new_object(Text, {
+				position = vmath.vector3(0, 100, 0),
+				text = "Applet 1:\nDemo of single scene."
+			})
+			scene.box = scene:new_object(Box, {
+				position = vmath.vector3(0, -30, 0),
+				size = vmath.vector3(50),
+				color = "#ff3dd3"
+			})
+			scene.direction = 1
+		end,
+		update = function(scene, dt)
+			local box_root_node = scene.box.root
+			box_root_node:add_position_x(80 * dt * scene.direction)
+			if math.abs(box_root_node:get_position_x()) > 90 then
+				scene.direction = -scene.direction
+			end
+		end,
+		final = function(scene)
+		end
+	})
+
+	-- Applet 2: Demo of switching scenes 
+	self.applet2 = wrap.gui_applet("applet2")
+	self.applet2:register_scene("loading", SceneLoading)
+	self.applet2:register_scene("lobby", SceneLobby)
+	self.applet2:show_scene("loading")
+end
+
+function final(self)
+	self.applet1:final()
+	self.applet2:final()
+end
+
+function update(self, dt)
+	self.applet1:update(dt)
+	self.applet2:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.applet1:on_message(message_id, message, sender)
+	self.applet2:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	return self.applet1:on_input(action_id, action) or self.applet2:on_input(action_id, action)
 end

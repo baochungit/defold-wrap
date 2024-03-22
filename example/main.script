@@ -1,6 +1,9 @@
 local wrap = require("wrap.wrap")
 
 function init(self)
+	msg.post(".", "acquire_input_focus")
+
+	-- Basic usage for game objects
 	local w = wrap.go({ "dot" })
 	w.dot:set_position_y(420):set_scale(vmath.vector3(1))
 		:animate({ "position.y", "scale" }, go.PLAYBACK_LOOP_PINGPONG, { 200, 2 }, go.EASING_INQUAD, 2)
