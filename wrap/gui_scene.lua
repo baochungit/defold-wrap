@@ -42,6 +42,10 @@ function GuiScene:is_alive()
 	return self._state and self._state ~= STATE_DELETED
 end
 
+function GuiScene:is_ready()
+	return self._state == STATE_READY
+end
+
 function GuiScene:set_transitions(transitions)
 	self._transitions = transitions or  {}
 end
@@ -114,7 +118,7 @@ function GuiScene:bg_update(dt)
 	if not self:is_alive() then return end
 	self:update(dt)
 	for _, object in ipairs(self._objects) do
-		object:update(dt)
+		object:bg_update(dt)
 	end
 end
 
@@ -129,31 +133,77 @@ function GuiScene:bg_final()
 end
 
 function GuiScene:bg_on_message(message_id, message, sender)
-	if not self:is_alive() then return end
+	if not self:is_ready() then return end
 	self:on_message(message_id, message, sender)
 end
 
 function GuiScene:bg_on_input(action_id, action)
-	if not self:is_alive() then return false end
-	if not self:on_input(action_id, action) then
-		for i = #self._objects, 1, -1 do
-			local object = self._objects[i]
-			local ret = object:on_input(action_id, action)
-			if ret then return true end
-		end
+	if not self:is_ready() then return false end
+	for i = #self._objects, 1, -1 do
+		local object = self._objects[i]
+		local ret = object:bg_on_input(action_id, action)
+		if ret then return true end
 	end
-	return false
+	return self:on_input(action_id, action)
 end
 
 -- Built-in transitions
-function GuiScene:fade_in(time)
+function GuiScene:fade_in(time, wait, easing)
 	return function(on_done)
-		self.root:set_alpha(0):animate("color.w", 1, gui.EASING_LINEAR, time or 0.5, 0, on_done)
+		self.root:set_alpha(0):animate("color.w", 1, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
 	end
 end
-function GuiScene:fade_out(time)
+function GuiScene:fade_out(time, wait, easing)
 	return function(on_done)
-		self.root:animate("color.w", 0, gui.EASING_LINEAR, time or 0.5, 0, on_done)
+		self.root:animate("color.w", 0, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_in_top(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:set_position_y(app_size.y):animate("position.y", 0, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_in_bottom(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:set_position_y(-app_size.y):animate("position.y", 0, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_in_right(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:set_position_x(app_size.x):animate("position.x", 0, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_in_left(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:set_position_x(-app_size.x):animate("position.x", 0, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_out_top(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:animate("position.y", app_size.y, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_out_bottom(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:animate("position.y", -app_size.y, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_out_right(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:animate("position.x", app_size.x, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
+	end
+end
+function GuiScene:slide_out_left(time, wait, easing)
+	return function(on_done)
+		local app_size = self.app:get_size()
+		self.root:animate("position.x", -app_size.x, easing or gui.EASING_LINEAR, time or 0.5, wait or 0, on_done)
 	end
 end
 

@@ -2,6 +2,9 @@ local GuiObject = {}
 GuiObject.__index = GuiObject
 GuiObject.__name = "GuiObject"
 
+local STATE_INITIALIZED = "initialized"
+local STATE_DELETED = "deleted"
+
 
 function GuiObject.new()
 	return setmetatable({}, GuiObject)
@@ -23,6 +26,11 @@ function GuiObject:setup(scene, props, settings)
 	self.settings = settings or {}
 	self.root = self.scene.root:new_box():set_visible(false)
 	self:init()
+	self._state = STATE_INITIALIZED
+end
+
+function GuiObject:is_alive()
+	return self._state and self._state ~= STATE_DELETED
 end
 
 function GuiObject:new_box(position, size)
@@ -52,15 +60,26 @@ function GuiObject:init()
 end
 
 function GuiObject:update(dt)
-	for _, object in ipairs(self._objects) do
-		object:update(dt)
-	end
 end
 
 function GuiObject:final()
 end
 
+function GuiObject:on_input(action_id, action)
+	return false
+end
+
+function GuiObject:bg_update(dt)
+	if not self:is_alive() then return end
+	self:update(dt)
+	for _, object in ipairs(self._objects) do
+		object:update(dt)
+	end
+end
+
 function GuiObject:delete()
+	if not self:is_alive() then return end
+	self._state = STATE_DELETED
 	self:final()
 	for _, object in ipairs(self._objects) do
 		object:delete()
@@ -68,7 +87,14 @@ function GuiObject:delete()
 	self.root:delete()
 end
 
-function GuiObject:on_input(action_id, action)
+function GuiObject:bg_on_input(action_id, action)
+	if not self:is_alive() then return false end
+	for i = #self._objects, 1, -1 do
+		local object = self._objects[i]
+		local ret = object:bg_on_input(action_id, action)
+		if ret then return true end
+	end
+	return self:on_input(action_id, action)
 end
 
 

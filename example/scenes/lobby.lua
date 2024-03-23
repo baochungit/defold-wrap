@@ -5,8 +5,8 @@ local Scene = GuiScene.extend()
 
 function Scene:init()
 	self:set_transitions({
-		transition_in = self:fade_in(2),
-		-- transition_out = self:fade_out()
+		transition_in = self:slide_in_left(),
+		transition_out = self:slide_out_right()
 	})
 
 	self:new_object(Text, {
