@@ -22,6 +22,7 @@ function GuiObject:setup(scene, props, settings)
 	self.props = props or {}
 	self.settings = settings or {}
 	self.root = self.scene.root:new_box():set_visible(false)
+	self:init()
 end
 
 function GuiObject:new_box(position, size)
@@ -32,10 +33,17 @@ function GuiObject:new_text(position, text)
 	return self.root:new_text(position, text)
 end
 
+function GuiObject:new_pie(position, size)
+	return self.root:new_pie(position, size)
+end
+
+function GuiObject:new_particlefx(position, particlefx)
+	return self.root:new_particlefx(position, particlefx)
+end
+
 function GuiObject:new_object(object_class, props, settings)
 	local object = object_class.new()
 	object:setup(self.scene, props, settings)
-	object:init()
 	table.insert(self._objects, object)
 	return object
 end
@@ -53,10 +61,10 @@ function GuiObject:final()
 end
 
 function GuiObject:delete()
-	for _, object in ipairs(self._objects) do
-		object:final()
-	end
 	self:final()
+	for _, object in ipairs(self._objects) do
+		object:delete()
+	end
 	self.root:delete()
 end
 

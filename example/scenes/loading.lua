@@ -4,6 +4,13 @@ local GuiScene = require("wrap.gui_scene")
 local Scene = GuiScene.extend()
 
 function Scene:init()
+	self:set_transitions({
+		transition_in = function(on_done)
+			self.root:set_alpha(0):set_scale(0.5):animate({ "color.w", "scale" }, { 1, 1 }, gui.EASING_LINEAR, 0.5, 0, on_done)
+		end,
+		transition_out = self:fade_out()
+	})
+
 	local box = self:new_object(Box, {
 		position = vmath.vector3(),
 		size = vmath.vector3(80)

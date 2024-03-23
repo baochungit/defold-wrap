@@ -50,13 +50,15 @@ function GuiApplet:show_scene(name_or_scene)
 		end
 	end
 	if instance then
-		if self.current_scene then
-			self.current_scene:final()
-			self.current_scene:bg_final()
-		end
 		instance:setup(self)
-		instance:init()
+		self.prev_scene = self.current_scene
 		self.current_scene = instance
+		self.current_scene:transition_in()
+		if self.prev_scene then
+			self.prev_scene:transition_out(function()
+				self.prev_scene = nil
+			end)
+		end
 	end
 end
 
@@ -65,28 +67,29 @@ function GuiApplet:get_size()
 end
 
 function GuiApplet:update(dt)
+	if self.prev_scene then
+		self.prev_scene:bg_update(dt)
+	end
 	if self.current_scene then
-		self.current_scene:update(dt)
 		self.current_scene:bg_update(dt)
 	end
 end
 
 function GuiApplet:final()
 	if self.current_scene then
-		self.current_scene:final()
 		self.current_scene:bg_final()
 	end
 end
 
 function GuiApplet:on_message(message_id, message, sender)
 	if self.current_scene then
-		self.current_scene:on_message(message_id, message, sender)
+		self.current_scene:bg_on_message(message_id, message, sender)
 	end
 end
 
 function GuiApplet:on_input(action_id, action)
 	if self.current_scene then
-		return self.current_scene:on_input(action_id, action)
+		return self.current_scene:bg_on_input(action_id, action)
 	end
 	return false
 end
