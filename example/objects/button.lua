@@ -1,4 +1,3 @@
-local Box = require("example.objects.box")
 local GuiObject = require("wrap.gui_object")
 local Object = GuiObject.extend()
 
@@ -22,8 +21,8 @@ function Object:on_input(action_id, action)
 			self:_set_hover(true)
 			if action_id == hash("touch") and action.pressed then
 				if self.settings.on_click then self.settings.on_click() end
-				return true
 			end
+			return true
 		else
 			self:_set_hover(false)
 		end

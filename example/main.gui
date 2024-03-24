@@ -1,7 +1,7 @@
 script: "/example/main.gui_script"
 fonts {
   name: "default"
-  font: "/builtins/fonts/system_font.font"
+  font: "/example/default.font"
 }
 background_color {
   x: 0.0

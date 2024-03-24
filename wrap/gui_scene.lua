@@ -1,3 +1,5 @@
+local GuiObject = require("wrap.gui_object")
+
 local GuiScene = {}
 GuiScene.__index = GuiScene
 GuiScene.__name = "GuiScene"
@@ -22,6 +24,38 @@ function GuiScene.extend()
 	return extended
 end
 
+function GuiScene:register_modal(name, object_class, props, settings)
+	if object_class.__name ~= "GuiObject" then
+		local Object = GuiObject.extend()
+		for k, v in pairs(object_class) do
+			Object[k] = v
+		end
+		object_class = Object
+	end
+	self._registered_modals[name] = {
+		class = object_class,
+		props = props,
+		settings = settings
+	}
+end
+
+function GuiScene:unregister_modal(name)
+	self._registered_modals[name] = nil
+end
+
+function GuiScene:open_modal(name, props, settings)
+	local data = self._registered_modals[name]
+	if data then
+		local _props = {}
+		local _settings = {}
+		if data.props then for k, v in pairs(data.props) do _props[k] = v end end
+		if props then for k, v in pairs(props) do _props[k] = v end end
+		if data.settings then for k, v in pairs(data.settings) do _settings[k] = v end end
+		if settings then for k, v in pairs(settings) do _settings[k] = v end end
+		return self:new_object(data.class, _props, _settings)
+	end
+end
+
 function GuiScene:new_object(object_class, props, settings)
 	local object = object_class.new()
 	object:setup(self, props, settings)
@@ -33,6 +67,7 @@ function GuiScene:setup(app)
 	self.app = app
 	self._objects = {}
 	self._transitions = {}
+	self._registered_modals = {}
 	self.root = self.app.root:new_box():set_visible(false)
 	self:init()
 	self._state = STATE_INITIALIZED
