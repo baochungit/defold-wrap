@@ -535,6 +535,74 @@ function Node:add_rotation_z(z)
 	return self:set_rotation(rotation)
 end
 
+function Node:get_euler()
+    return gui.get_euler(self.node)
+end
+
+function Node:set_euler(euler)
+    gui.set_euler(self.node, euler)
+    return self
+end
+
+function Node:add_euler(value)
+    local euler = self:get_euler()
+    euler.x = euler.x + value.x
+    euler.y = euler.y + value.y
+    euler.z = euler.z + value.z
+    return self
+end
+
+function Node:get_euler_x()
+    local euler = self:get_euler()
+    return euler.x
+end
+
+function Node:get_euler_y()
+    local euler = self:get_euler()
+    return euler.y
+end
+
+function Node:get_euler_z()
+    local euler = self:get_euler()
+    return euler.z
+end
+
+function Node:set_euler_x(x)
+    local euler = self:get_euler()
+    euler.x = x
+    return self:set_euler(euler)
+end
+
+function Node:set_euler_y(y)
+    local euler = self:get_euler()
+    euler.y = y
+    return self:set_euler(euler)
+end
+
+function Node:set_euler_z(z)
+    local euler = self:get_euler()
+    euler.z = z
+    return self:set_euler(euler)
+end
+
+function Node:add_euler_x(x)
+    local euler = self:get_euler()
+    euler.x = euler.x + x
+    return self:set_euler(euler)
+end
+
+function Node:add_euler_y(y)
+    local euler = self:get_euler()
+    euler.y = euler.y + y
+    return self:set_euler(euler)
+end
+
+function Node:add_euler_z(z)
+    local euler = self:get_euler()
+    euler.z = euler.z + z
+    return self:set_euler(euler)
+end
+
 function Node:get_scale()
 	return gui.get_scale(self.node)
 end
