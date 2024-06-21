@@ -410,9 +410,11 @@ end
 
 function Node:add_position(value)
 	local position = self:get_position()
-	position.x = position.x + value.x
-	position.y = position.y + value.y
-	position.z = position.z + value.z
+	if type(value) == "number" then
+		position = position + vmath.vector3(value)
+	else
+		position = position + value
+	end
 	return self:set_position(position)
 end
 
@@ -478,9 +480,11 @@ end
 
 function Node:add_rotation(value)
 	local rotation = self:get_rotation()
-	rotation.x = rotation.x + value.x
-	rotation.y = rotation.y + value.y
-	rotation.z = rotation.z + value.z
+	if type(value) == "number" then
+		rotation = rotation + vmath.vector3(value)
+	else
+		rotation = rotation + value
+	end
 	return self:set_rotation(rotation)
 end
 
@@ -546,9 +550,11 @@ end
 
 function Node:add_euler(value)
 	local euler = self:get_euler()
-	euler.x = euler.x + value.x
-	euler.y = euler.y + value.y
-	euler.z = euler.z + value.z
+	if type(value) == "number" then
+		euler = euler + vmath.vector3(value)
+	else
+		euler = euler + value
+	end
 	return self:set_euler(euler)
 end
 
@@ -618,13 +624,9 @@ end
 function Node:add_scale(value)
 	local scale = self:get_scale()
 	if type(value) == "number" then
-		scale.x = scale.x + value
-		scale.y = scale.y + value
-		scale.z = scale.z + value
+		scale = scale + vmath.vector3(value)
 	else
-		scale.x = scale.x + value.x
-		scale.y = scale.y + value.y
-		scale.z = scale.z + value.z
+		scale = scale + value
 	end
 	return self:set_scale(scale)
 end
@@ -727,9 +729,11 @@ end
 
 function Node:add_size(value)
 	local size = self:get_size()
-	size.x = size.x + value.x
-	size.y = size.y + value.y
-	size.z = size.z + value.z
+	if type(value) == "number" then
+		size = size + vmath.vector3(value)
+	else
+		size = size + value
+	end
 	return self:set_size(size)
 end
 
