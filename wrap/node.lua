@@ -840,7 +840,7 @@ function Node:set_flipbook_playback_rate(playback_rate)
 end
 
 function Node:play_particlefx(emitter_state_function)
-	gui.set_flipbook_cursor(self.node, emitter_state_function)
+	gui.play_particlefx(self.node, emitter_state_function)
 	return self
 end
 
