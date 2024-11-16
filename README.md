@@ -1,6 +1,6 @@
-# Defold Wrap Library
+# Defold Wrap
 
-This tiny library is intended to help you change the way you code on Defold.
+This small library aims to help you change the way you write code on Defold.
 
 Instead of
 ```lua
@@ -38,6 +38,7 @@ add_position_y(...)
 add_position_z(...)
 ...
 ```
+Please check the examples for better understanding.
 
 To use this library, simply add `https://github.com/baochungit/defold-wrap/archive/master.zip` as a dependency in your `game.project` file
 
