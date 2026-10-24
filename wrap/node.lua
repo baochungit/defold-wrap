@@ -54,15 +54,19 @@ function Node:animate(property, to, easing, duration, delay, complete_function, 
 	return self
 end
 
-function Node:cancel_animation(property)
+function Node:cancel_animations(property)
 	if type(property) == "table" then
 		for _, prop in pairs(property) do
-			gui.cancel_animation(self.node, prop)
+			gui.cancel_animations(self.node, prop)
 		end
 	else
-		gui.cancel_animation(self.node, property)
+		gui.cancel_animations(self.node, property)
 	end
 	return self
+end
+
+function Node:cancel_animation(property)
+	return self:cancel_animations(property)
 end
 
 function Node:new_box_node(position, size)
